@@ -28,3 +28,5 @@ Route::get('/posts/{id}', 'HomeController@show')->name('postovi');
 //Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/jela', 'FDController@show_tags')->name('jela');
