@@ -14,6 +14,6 @@ class FDController extends Controller
 
     public function show_tags()
     {
-        $tags= Tags::$this->title();
+        
     }
 }
