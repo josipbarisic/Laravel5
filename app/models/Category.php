@@ -7,5 +7,5 @@ use \igaster\TranslateEloquent\TranslationTrait;
 
 class Category extends Model
 {
-    protected $table='category';
+    
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tags;
+use App\models\Category;
 use Illuminate\Http\Request;
 use DB;
 

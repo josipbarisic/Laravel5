@@ -8,8 +8,10 @@ class Meal extends Model
 {
     protected $table='jela';
 
+    #relationships 
+    
     /**
-     * Get the phone record associated with the user.
+     * Get the phone record associated with the category.
      */
     public function category()
     {
@@ -17,7 +19,7 @@ class Meal extends Model
     }
 
     /**
-     * The roles that belong to the user.
+     * The roles that belong to the tags.
      */
     public function tags()
     {

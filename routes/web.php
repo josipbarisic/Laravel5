@@ -20,6 +20,8 @@ Route::get('/form', function () {
 });
 Route::get('/create', 'HomeController@create');
 
+Route::get('/create-category', 'HomeController@create');
+
 Route::post('/form', ['as' => '/form', 'uses' => 'HomeController@succ']);
 
 Route::post('/form', 'HomeController@spremi')->name('test');

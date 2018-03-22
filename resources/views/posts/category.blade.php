@@ -7,6 +7,10 @@
             {{Form::label('title','Title')}}
             {{Form::text('title', '',['class'=>'form-control', 'placeholder' => 'Title'])}}
         </div>
+        <div class="form-group">
+            {{Form::label('slug','Body')}}
+            {{Form::textarea('slug', '',['class'=>'form-control', 'placeholder' => 'Body Text'])}}
+        </div>
         {{Form::submit('Submit',['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 
