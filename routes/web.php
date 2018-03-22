@@ -27,6 +27,8 @@ Route::post('/form', 'HomeController@spremi')->name('test');
 Route::get('/posts/{id}', 'HomeController@show')->name('postovi');
 //Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/jela', function () {
+   
+    return view('pages.jela');
+});
 Route::get('/jela', 'FDController@show_tags')->name('jela');

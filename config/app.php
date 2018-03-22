@@ -164,7 +164,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Dimsav\Translatable\TranslatableServiceProvider::class,
         /*
          * Package Service Providers...
          */

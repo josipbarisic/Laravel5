@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cb24c363bb220017ea58f17e682c717",
+    "content-hash": "cef65ea006c7ab3b65eca0d0e42995c2",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -437,6 +437,52 @@
                 "fixtures"
             ],
             "time": "2017-08-15T16:48:10+00:00"
+        },
+        {
+            "name": "igaster/laravel-translate-eloquent",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/igaster/laravel-translate-eloquent.git",
+                "reference": "fa304ac6b984432cdd9520d140ee451a28b3dc5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/igaster/laravel-translate-eloquent/zipball/fa304ac6b984432cdd9520d140ee451a28b3dc5b",
+                "reference": "fa304ac6b984432cdd9520d140ee451a28b3dc5b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.4",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "igaster\\TranslateEloquent\\": "src/",
+                    "igaster\\TranslateEloquent\\tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giannis Gasteratos",
+                    "email": "igasteratos@gmail.com"
+                }
+            ],
+            "description": "Description",
+            "homepage": "https://github.com/igaster/laravel-translate-eloquent.git",
+            "keywords": [
+                "laravel-5.x",
+                "package"
+            ],
+            "time": "2018-01-08T23:54:24+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1094,16 +1140,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.24.2",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875"
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bba6c6e410c6b4317e37a9474aeaa753808c3875",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/cbcf13da0b531767e39eb86e9687f5deba9857b4",
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4",
                 "shasum": ""
             },
             "require": {
@@ -1143,7 +1189,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-03-10T10:10:14+00:00"
+            "time": "2018-03-19T15:50:49+00:00"
         },
         {
             "name": "nikic/php-parser",

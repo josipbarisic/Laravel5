@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-
-class AddTimestamps extends Migration
+class AddMealId extends Migration
 {
     /**
      * Run the migrations.
@@ -14,20 +13,9 @@ class AddTimestamps extends Migration
      */
     public function up()
     {
-        Schema::table('Tags', function (Blueprint $table) {
-             
-            
+        Schema::table('category', function (Blueprint $table) {
+            $table->integer('meal_id');
         });
-
-        Schema::table('Category', function (Blueprint $table) {
-           
-       });
-
-       Schema::table('Ingredients', function (Blueprint $table) {
-       
-   });
- 
-
     }
 
     /**
@@ -37,6 +25,8 @@ class AddTimestamps extends Migration
      */
     public function down()
     {
-       
+        Schema::table('category', function (Blueprint $table) {
+            $table->dropColumn('meal_id');
+        });
     }
 }
