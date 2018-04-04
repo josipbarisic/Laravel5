@@ -13,8 +13,5 @@
         <div class="jumbotron">
         {!!$category->slug!!}
         </div>
-        <div class="jumbotron">
-            {!!$category->meal_id!!}
-            </div>
         
 @endsection

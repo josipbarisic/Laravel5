@@ -2,14 +2,10 @@
 
 @section('content')
 	<h1>Create Category</h1>
-    {!! Form::open(['route' =>'saved', 'method' => 'POST']) !!}
+    {!! Form::open(['route' =>'test', 'method' => 'POST']) !!}
         <div class="form-group">
             {{Form::label('title','Title')}}
             {{Form::text('title', '',['class'=>'form-control', 'placeholder' => 'Title'])}}
-        </div>
-        <div class="form-group">
-            {{Form::label('slug','Slug')}}
-            {{Form::text('slug', '',['class'=>'form-control', 'placeholder' => 'Slug name'])}}
         </div>
         {{Form::submit('Submit',['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}

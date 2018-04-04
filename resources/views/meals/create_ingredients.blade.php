@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-	<h1>Create Category</h1>
-    {!! Form::open(['route' =>'saved', 'method' => 'POST']) !!}
+	<h1>Ingredient</h1>
+    {!! Form::open(['route' =>'save_ingr', 'method' => 'POST']) !!}
         <div class="form-group">
             {{Form::label('title','Title')}}
             {{Form::text('title', '',['class'=>'form-control', 'placeholder' => 'Title'])}}

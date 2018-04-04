@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Category;
+use App\models\Ingredient;
 use DB;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,18 +23,11 @@ class CategoryController extends Controller
     
     public function succ()
     {
-       /*
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->title = $request->input('body');
-        $post->save();
-        */ 
-
-        
+      
     }
     public function create()
     {
-        return view('meals.create_category');
+        return view('meals.create_ingredients');
     }
 
     public function save(Request $request)
@@ -46,21 +39,21 @@ class CategoryController extends Controller
 
         ]);
 
-        $category=new Category;
-        $category->title=$request->title;
-        $category->slug=str_slug($request->slug, '-');
-        $category->save();
+        $ingredient=new ingredient;
+        $ingredient->title=$request->title;
+        $ingredient->slug=str_slug($request->slug, '-');
+        $ingredient->save();
         
-        //$category = category::create($request->all());
+        //$ingredient = ingredient::create($request->all());
         //dd("test");
         //route('routeName', ['id' => 1]);
-        return redirect()->route('category', ['id' => $category->id])->with('message','Category Created');
+        return redirect()->route('ingredient', ['id' => $ingredient->id])->with('message','ingredient Created');
     }
 
     public function show($id)
     {
-        $category = Category::find($id);
-        return view ('meals.show_category')->with('category', $category);
+        
+        return 'ADDED';
     }
     /**
      * Show the application dashboard.

@@ -19,7 +19,7 @@ Route::get('/', function () {
 //category form
 Route::get('/category-form', function () {
    
-    return view('pages.pogled');
+    return view('pages.jela');
 });
 Route::get('/create-category', 'CategoryController@create');
 
@@ -27,7 +27,20 @@ Route::post('/category-form', ['as' => '/category-form', 'uses' => 'CategoryCont
 
 Route::post('/category-form', 'CategoryController@save')->name('saved');
 
-Route::get('/category/{id}', 'CategoryController@show_category')->name('category');
+Route::get('/category/{id}', 'CategoryController@show')->name('category');
+
+//ingredient form
+Route::get('/ingredient-form', function () {
+   
+    return view('pages.jela');
+});
+Route::get('/create-ingredient', 'IngredientController@create');
+
+Route::post('/ingredient-form', ['as' => '/ingredient-form', 'uses' => 'IngredientController@succ']);
+
+Route::post('/ingredient-form', 'IngredientController@save')->name('save_ingr');
+
+Route::get('/ingredient/{id}', 'IngredientController@show')->name('ingredient');
 
 //posts
 Route::get('/form', function () {

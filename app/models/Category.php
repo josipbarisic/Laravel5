@@ -10,7 +10,6 @@ class Category extends Model
     protected $fillable = [
         'title',
         'slug',
-        'meal_id'
     ];
     protected $table='category';
 

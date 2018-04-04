@@ -14,7 +14,6 @@ class CategoryTimestamps extends Migration
     public function up()
     {
         Schema::table('category', function (Blueprint $table) {
-            $table->timestamps();
         });
     }
 
