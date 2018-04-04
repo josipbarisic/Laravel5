@@ -53,7 +53,7 @@ class IngredientController extends Controller
     public function show($id)
     {
         
-        return 'ADDED';
+        return 'added';
     }
     /**
      * Show the application dashboard.
