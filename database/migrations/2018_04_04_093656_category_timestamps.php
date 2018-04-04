@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-
-class AddTimestamps extends Migration
+class CategoryTimestamps extends Migration
 {
     /**
      * Run the migrations.
@@ -14,21 +13,9 @@ class AddTimestamps extends Migration
      */
     public function up()
     {
-        Schema::table('Tags', function (Blueprint $table) {
-             
-            
-        });
-
-        Schema::table('Category', function (Blueprint $table) {
+        Schema::table('category', function (Blueprint $table) {
             $table->timestamps();
-           
-       });
-
-       Schema::table('Ingredients', function (Blueprint $table) {
-       
-   });
- 
-
+        });
     }
 
     /**
@@ -38,6 +25,6 @@ class AddTimestamps extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Category');
+        Schema::dropIfExists('category');
     }
 }

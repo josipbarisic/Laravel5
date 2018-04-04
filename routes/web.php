@@ -14,14 +14,27 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//category form
+Route::get('/category-form', function () {
+   
+    return view('pages.pogled');
+});
+Route::get('/create-category', 'CategoryController@create');
+
+Route::post('/category-form', ['as' => '/category-form', 'uses' => 'CategoryController@succ']);
+
+Route::post('/category-form', 'CategoryController@save')->name('saved');
+
+Route::get('/category/{id}', 'CategoryController@show_category')->name('category');
+
+//posts
 Route::get('/form', function () {
    
     return view('pages.pogled');
 });
 Route::get('/create', 'HomeController@create');
-
-Route::get('/create-category', 'HomeController@create');
-
 Route::post('/form', ['as' => '/form', 'uses' => 'HomeController@succ']);
 
 Route::post('/form', 'HomeController@spremi')->name('test');
