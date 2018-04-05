@@ -29,18 +29,11 @@ Route::post('/category-form', 'CategoryController@save')->name('saved');
 
 Route::get('/category/{id}', 'CategoryController@show')->name('category');
 
-//ingredient form
-Route::get('/ingredient-form', function () {
-   
-    return view('pages.jela');
-});
-Route::get('/create-ingredient', 'IngredientController@create');
+Route::get('/category/all', 'CategoryController@index')->name('category_all');
 
-Route::post('/ingredient-form', ['as' => '/ingredient-form', 'uses' => 'IngredientController@succ']);
+Route::get('/category/{id}/edit', 'CategoryController@edit')->name('category_edit');
 
-Route::post('/ingredient-form', 'IngredientController@save')->name('save_ingr');
 
-Route::get('/ingredient/{id}', 'IngredientController@show')->name('ingredient');
 
 //posts
 Route::get('/form', function () {

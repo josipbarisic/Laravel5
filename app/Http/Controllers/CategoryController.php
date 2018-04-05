@@ -56,11 +56,31 @@ class CategoryController extends Controller
         //route('routeName', ['id' => 1]);
         return redirect()->route('category', ['id' => $category->id])->with('message','Category Created');
     }
+    
+    public function index()
+    {
+        return Category::all();
+    }
 
     public function show($id)
     {
-        $category = Category::find($id);
-        return view ('meals.show_category')->with('category', $category);
+        return Category::find($id); 
+    }
+    public function edit(Request $request, $id)
+    {
+       $this->validate($request, 
+       [
+        'title'=>'required',
+        'slug'=>'required',
+       ]);
+
+        $category=Category::find($id);
+        $category->title=$request->title;
+        $string='-categorySlug';
+        $category->slug=str_slug($request->slug, '-').$string;
+        $category->save();
+
+        return Category::find($id);
     }
     /**
      * Show the application dashboard.
