@@ -10,17 +10,12 @@ class Meal extends Model
 
     #relationships 
     
-    /**
-     * Get the phone record associated with the category.
-     */
+    
     public function category()
     {
         return $this->hasOne('App\models\Category','meal_id');
     }
 
-    /**
-     * The roles that belong to the tags.
-     */
     public function tags()
     {
         return $this->belongsToMany('App\models\Tag','jelo_tag','jelo_id','tag_id');

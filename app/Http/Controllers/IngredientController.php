@@ -15,21 +15,7 @@ class IngredientController extends Controller
      */
     public function __construct()
     {
-      //  $this->middleware('auth');
-    }
-    
-
-    
-    
-    public function succ()
-    {
       
-    }
-    public function create()
-    {
-        {
-            return view('meals.create_ingredients');
-        }
     }
 
     public function save(Request $request)
@@ -44,22 +30,8 @@ class IngredientController extends Controller
         $ingredient->title=$request->title;
         $ingredient->slug=str_slug($request->slug, '-');
         $ingredient->save();
-        
-        //$ingredient = ingredient::create($request->all());
-        //dd("test");
-        //route('routeName', ['id' => 1]);
+
         return $ingredient;
-        /*if(isset($_GET['title']) && isset($_GET['slug']))
-        {
-            $gettitle=$_GET['title'];
-            $getslug=$_GET['slug'];
-            $titleslug=mysql_query('INSERT INTO SITE (title, slug) VALUES('. $gettitle. ',' .str_slug($getslug). ')') or die(mysql_error());
-            
-            return redirect()->route('ingredient', ['id' => $ingredient->id])->with('message','ingredient Created (GET)');
-        }*/
-        //$ingredient = ingredient::create($request->all());
-        //dd("test");
-        //route('routeName', ['id' => 1]);
     }
 
     public function index()
@@ -74,26 +46,38 @@ class IngredientController extends Controller
         return Ingredient::find($id);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request)
     {
        $this->validate($request, 
        [
         'title'=>'required',
         'slug'=>'required',
+        'id'=>'required'
        ]);
 
-        $ingredient=Ingredient::find($id);
+        $ingredient=Ingredient::find($request->id);
+        if($ingredient==NULL)
+        {
+            return 'Ne postoji';
+        }
+
         $ingredient->title=$request->title;
         $string='-ingredientSlug';
         $ingredient->slug=str_slug($request->slug, '-').$string;
         $ingredient->save();
 
-        return Ingredient::find($id);
+        return $ingredient;
     }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    
+
+    public function delete(Request $request)
+    {
+        $this->validate($request, 
+       [
+        'id'=>'required'
+       ]);
+        $ingredient=Ingredient::find($request->id);
+        $ingredient->delete();
+
+        return 'Deleted'.$ingredient;
+    }
 }

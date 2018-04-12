@@ -15,32 +15,15 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-      //  $this->middleware('auth');
+      
     }
     
-
     
-    
-    public function succ()
-    {
-       /*
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->title = $request->input('body');
-        $post->save();
-        */ 
-
-        
-    }
-    public function create()
-    {
-        return view('meals.create_category');
-    }
 
     public function save(Request $request)
     {
-      //  dd($request->all());
-        $this->validate($request, [
+    
+            $this->validate($request, [
             'title'=>'required',
             'slug'=>'required',
 
@@ -50,11 +33,8 @@ class CategoryController extends Controller
         $category->title=$request->title;
         $category->slug=str_slug($request->slug, '-');
         $category->save();
-        
-        //$category = category::create($request->all());
-        //dd("test");
-        //route('routeName', ['id' => 1]);
-        return redirect()->route('category', ['id' => $category->id])->with('message','Category Created');
+
+        return $category;
     }
     
     public function index()
@@ -66,26 +46,26 @@ class CategoryController extends Controller
     {
         return Category::find($id); 
     }
-    public function edit(Request $request, $id)
+    public function edit(Request $request)
     {
        $this->validate($request, 
        [
+        'id'=>'required',
         'title'=>'required',
         'slug'=>'required',
        ]);
 
-        $category=Category::find($id);
+        $category=Category::find($request->id);
+        if($category==NULL)
+        {
+            return 'Ne postoji';
+        }
         $category->title=$request->title;
         $string='-categorySlug';
         $category->slug=str_slug($request->slug, '-').$string;
         $category->save();
 
-        return Category::find($id);
+        return Category::find($request->id);
     }
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     
 }

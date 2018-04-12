@@ -17,24 +17,42 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//ingredient form
-Route::get('/ingredient-form', function () {
-   
-    return view('pages.jela');
-});
-Route::get('/create-ingredient', 'IngredientController@create');
+//ingredient 
 
 //Route::post('/ingredient-form', ['as' => '/ingredient-form', 'uses' => 'IngredientController@succ']);
 
-Route::post('/ingredient-form', 'IngredientController@save')->name('save_ingr');
+Route::post('/ingredient/create', 'IngredientController@save')->name('save_ingr');
 
 Route::get('/ingredient/all', 'IngredientController@index')->name('show_ingredients');
 
 Route::get('/ingredient/{id}', 'IngredientController@show')->name('show_ing_id');
 
-Route::get('/ingredient/{id}/edit', 'IngredientController@edit')->name('edit_ing');
+Route::post('/ingredient/edit', 'IngredientController@edit')->name('edit_ing');
+
+Route::post('/ingredient/delete', 'IngredientController@delete')->name('delete_ing');
+
+//category 
 
 
+Route::post('/category/create', 'CategoryController@save')->name('saved');
+
+Route::get('/category/all', 'CategoryController@index')->name('show_category');
+
+Route::get('/category/{id}', 'CategoryController@show')->name('category');
+
+Route::post('/category/edit', 'CategoryController@edit')->name('category_edit');
+
+Route::post('/category/delete', 'CategoryController@delete')->name('delete_cat');
+
+//tag
+
+Route::post('/tag/create', 'TagController@create_save')->name('save_tag');
+
+Route::get('/tag/all', 'TagController@index')->name('show_tags');
+
+Route::get('/tag/{id}', 'TagController@show')->name('show_tag');
+
+Route::post('/tag/edit', 'TagController@edit')->name('edit_tag');
 
 
 
