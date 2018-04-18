@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\models\Meal;
+use App\models\Category;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MealController extends Controller
 {
@@ -15,21 +17,31 @@ class MealController extends Controller
 
     public function create_save(Request $request)
     {
+
         $this->validate($request, [
             'title'=>'required',
             'slug'=>'required',
-
+            /*'category_id'=>['required',
+            Rule::exists('category')->where(function ($query){
+                $query->where('id', 1);
+            })]*/
         ]);
-
+        dd('test');
         $meal=new Meal;
         $meal->title=$request->title;
         $meal->slug=str_slug($request->slug, '-');
+        if ($request->filled('category_id')) 
+        {
+            $meal->category_id=$request->category_id;
+        }
         $meal->save();
         
+        return $meal;
+
         //$meal = meal::create($request->all());
         //dd("test");
         //route('routeName', ['id' => 1]);
-        return $meal;
+        
         /*if(isset($_GET['title']) && isset($_GET['slug']))
         {
             $gettitle=$_GET['title'];
@@ -66,7 +78,8 @@ class MealController extends Controller
         $meal=Meal::find($id);
         $meal->title=$request->title;
         $string='-mealSlug';
-        $meal->slug=str_slug($request->slug, '-').$string;
+        $meal->slug=str_slug($request->slug, ' ').$string;
+        $meal->category_id=$request->category_id;
         $meal->save();
 
         return meal::find($id);

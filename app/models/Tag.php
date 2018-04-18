@@ -17,7 +17,7 @@ class Tag extends Model
     ];
     protected $table='tags';
 
-    protected $dates='deleted_at';
+    protected $dates=['deleted_at'];
 
     public function tags()
     {

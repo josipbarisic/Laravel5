@@ -10,6 +10,7 @@ class Meal extends Model
 
     #relationships 
     
+    public $timestamps=false;
     
     public function category()
     {

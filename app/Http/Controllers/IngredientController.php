@@ -36,7 +36,16 @@ class IngredientController extends Controller
 
     public function index()
     {
-        
+        Ingredient::withTrashed()->where('id', 6)->delete();
+        Ingredient::withTrashed()->where('id', 7)->delete();
+        Ingredient::withTrashed()->where('id', 8)->delete();
+        Ingredient::withTrashed()->where('id', 9)->delete();
+        Ingredient::withTrashed()->where('id', 12)->delete();
+        Ingredient::withTrashed()->where('id', 14)->delete();
+        Ingredient::withTrashed()->where('id', 15)->delete();
+        Ingredient::withTrashed()->where('id', 16)->delete();
+        Ingredient::withTrashed()->where('id', 17)->delete();
+
         return Ingredient::all();
     }
 
@@ -69,6 +78,7 @@ class IngredientController extends Controller
         return $ingredient;
     }
 
+    //soft delete
     public function delete(Request $request)
     {
         $this->validate($request, 

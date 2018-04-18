@@ -54,5 +54,16 @@ Route::get('/tag/{id}', 'TagController@show')->name('show_tag');
 
 Route::post('/tag/edit', 'TagController@edit')->name('edit_tag');
 
+Route::post('/tag/delete', 'TagController@delete')->name('delete_tag');
 
+//meal
+Route::post('/meal/create', 'MealController@create_save')->name('save_meal');
+
+Route::get('/meal/all', 'MealController@index')->name('show_meals');
+
+Route::get('/meal/{id}', 'MealController@show')->name('show_meal');
+
+Route::post('/meal/edit', 'MealController@edit')->name('edit_meal');
+
+Route::post('/meal/delete', 'MealController@delete')->name('delete_meal');
 

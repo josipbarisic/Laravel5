@@ -39,6 +39,14 @@ class CategoryController extends Controller
     
     public function index()
     {
+        Category::withTrashed()->where('id', 7)->delete();
+        Category::withTrashed()->where('id', 8)->delete();
+        Category::withTrashed()->where('id', 9)->delete();
+        Category::withTrashed()->where('id', 10)->delete();
+        Category::withTrashed()->where('id', 11)->delete();
+        Category::withTrashed()->where('id', 12)->delete();
+        Category::withTrashed()->where('id', 13)->delete();
+        Category::withTrashed()->where('id', 14)->delete();
         return Category::all();
     }
 
@@ -67,5 +75,15 @@ class CategoryController extends Controller
 
         return Category::find($request->id);
     }
-    
+    public function delete(Request $request)
+    {
+        $this->validate($request, 
+       [
+        'id'=>'required'
+       ]);
+        $category=Category::find($request->id);
+        $category->delete();
+
+        return 'Deleted'.$category;
+    }
 }

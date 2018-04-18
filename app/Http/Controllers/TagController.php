@@ -13,19 +13,19 @@ class TagController extends Controller
       
     }
 
-    public function save(Request $request)
-    {
+    public function create_save(Request $request)
+    {   
+        // dd($request->all());
         $this->validate($request, [
             'title'=>'required',
-            'slug'=>'required',
-
+            'slug'=>'required'
         ]);
-
+        
         $tag=new Tag;
         $tag->title=$request->title;
         $tag->slug=str_slug($request->slug, '-');
         $tag->save();
-
+        
         return $tag;
     }
 
@@ -48,10 +48,9 @@ class TagController extends Controller
         'title'=>'required',
         'slug'=>'required',
        ]);
-       dd($request->slug);
-       /*
+       
         $tag=Tag::find($request->id);
-        if($tag==NULL)
+        if ($tag == NULL)
         {
             return 'Ne postoji';
         }
@@ -60,7 +59,17 @@ class TagController extends Controller
         $tag->slug=str_slug($request->slug, '-').$string;
         $tag->save();
 
-        return Tag::find($request->id);*/
+        return Tag::find($request->id);
     }
-  
+    public function delete(Request $request)
+    {
+        $this->validate($request, 
+       [
+        'id'=>'required'
+       ]);
+        $tag=Tag::find($request->id);
+        $tag->delete();
+
+        return 'Deleted'.$tag;
+    }
 }
