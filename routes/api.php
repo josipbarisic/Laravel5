@@ -67,3 +67,4 @@ Route::post('/meal/edit', 'MealController@edit')->name('edit_meal');
 
 Route::post('/meal/delete', 'MealController@delete')->name('delete_meal');
 
+

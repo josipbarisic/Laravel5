@@ -23,7 +23,8 @@ class TagController extends Controller
         
         $tag=new Tag;
         $tag->title=$request->title;
-        $tag->slug=str_slug($request->slug, '-');
+        $string='-tagSlug';
+        $tag->slug=str_slug($request->slug, '-').$string;
         $tag->save();
         
         return $tag;

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\models\Meal;
 use App\models\Category;
+use App\models\Ingredient;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\models\Jelo_Ingredient;
+
 
 class MealController extends Controller
 {
@@ -19,26 +22,36 @@ class MealController extends Controller
     {
 
         $this->validate($request, [
+            
             'title'=>'required',
             'slug'=>'required',
-            /*'category_id'=>['required',
-            Rule::exists('category')->where(function ($query){
-                $query->where('id', 1);
-            })]*/
+            'category_id'=>'exists:category,id',
+            'ingredient_id'=>'required|exists:ingredients,id',
+            'tag_id'=>'required|exists:tags,id',
         ]);
-        dd('test');
         $meal=new Meal;
         $meal->title=$request->title;
-        $meal->slug=str_slug($request->slug, '-');
+        $string = '-mealSlug';
+        $meal->slug=str_slug($request->slug, '-').$string;
+        
         if ($request->filled('category_id')) 
         {
             $meal->category_id=$request->category_id;
         }
         $meal->save();
+        $meal->ingredients()->sync([
+            $request->ingredient_id
+        ]);
         
+        $meal->tags()->sync([
+                $request->tag_id,
+            ]
+            );
+
+
         return $meal;
 
-        //$meal = meal::create($request->all());
+        //$meal = Meal::create($request->all());
         //dd("test");
         //route('routeName', ['id' => 1]);
         
@@ -57,32 +70,78 @@ class MealController extends Controller
 
     public function index()
     {
-        
         return Meal::all();
     }
 
     public function show($id)
     {
-        
-        return Meal::find($id);
+        Meal::withTrashed()->where('id', 19)->restore();
+        //return Meal::find($id);
     }
 
-    public function edit(Request $request, $id)
+
+
+    public function edit(Request $request)
     {
        $this->validate($request, 
        [
-        'title'=>'required',
-        'slug'=>'required',
+        'id'=>'required',
        ]);
+
+       $meal=Meal::find($request->id);
        
-        $meal=Meal::find($id);
-        $meal->title=$request->title;
+        if($meal==NULL)
+        {
+            return 'Ne postoji';
+        }
+        if($request->filled('title'))
+        {
+            $meal->title=$request->title;
+        }
         $string='-mealSlug';
+        if($request->filled('slug'))
+        {
         $meal->slug=str_slug($request->slug, ' ').$string;
-        $meal->category_id=$request->category_id;
+        }
+        
+            $meal->ingredients()->attach([
+                $request->ingredient_id
+            ]);
+            
+            $meal->tags()->attach([
+                    $request->tag_id,
+                ]
+                );
+
         $meal->save();
 
-        return meal::find($id);
+        return Meal::find($request->id);
+    }
+
+    //soft delete
+    public function delete(Request $request)
+    {
+        $this->validate($request, 
+       [
+        'id'=>'required'
+       ]);
+
+        $meal=Meal::find($request->id);
+        
+        $collect_ingid = $meal->ingredients()->pluck('ingredients.id');
+        $collect_tagid = $meal->tags()->pluck('tags.id');
+        
+        $meal->ingredients()->detach([
+            $collect_ingid,
+        ]);
+
+        $meal->tags()->detach([
+            $collect_tagid,
+        ]);
+
+        $meal->delete();
+
+        return 'Deleted'.$meal;
     }
     /**
      * Show the application dashboard.

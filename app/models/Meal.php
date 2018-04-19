@@ -3,12 +3,17 @@
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Meal extends Model
 {
+    use softDeletes;
+
     protected $table='jela';
 
     #relationships 
+    
+    protected $dates = ['deleted_at'];
     
     public $timestamps=false;
     
