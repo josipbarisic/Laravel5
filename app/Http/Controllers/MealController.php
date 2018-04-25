@@ -23,14 +23,14 @@ class MealController extends Controller
 
         $this->validate($request, [
             
-            'title'=>'required',
-            'slug'=>'required',
-            'category_id'=>'exists:category,id',
-            'ingredient_id'=>'required|exists:ingredients,id',
-            'tag_id'=>'required|exists:tags,id',
+            'title' => 'required',
+            'slug' => 'required',
+            'category_id' => 'exists:category,id',
+            'ingredient_id' => 'required|exists:ingredients,id',
+            'tag_id' => 'required|exists:tags,id',
         ]);
-        $meal=new Meal;
-        $meal->title=$request->title;
+        $meal = new Meal;
+        $meal->title = $request->title;
         $string = '-mealSlug';
         $meal->slug=str_slug($request->slug, '-').$string;
         
@@ -50,22 +50,6 @@ class MealController extends Controller
 
 
         return $meal;
-
-        //$meal = Meal::create($request->all());
-        //dd("test");
-        //route('routeName', ['id' => 1]);
-        
-        /*if(isset($_GET['title']) && isset($_GET['slug']))
-        {
-            $gettitle=$_GET['title'];
-            $getslug=$_GET['slug'];
-            $titleslug=mysql_query('INSERT INTO SITE (title, slug) VALUES('. $gettitle. ',' .str_slug($getslug). ')') or die(mysql_error());
-            
-            return redirect()->route('meal', ['id' => $meal->id])->with('message','meal Created (GET)');
-        }*/
-        //$meal = meal::create($request->all());
-        //dd("test");
-        //route('routeName', ['id' => 1]);
     }
 
     public function index()
@@ -75,8 +59,7 @@ class MealController extends Controller
 
     public function show($id)
     {
-        Meal::withTrashed()->where('id', 19)->restore();
-        //return Meal::find($id);
+        return Meal::find($id);
     }
 
 
@@ -98,20 +81,19 @@ class MealController extends Controller
         {
             $meal->title=$request->title;
         }
-        $string='-mealSlug';
+        $string = '-mealSlug';
         if($request->filled('slug'))
         {
         $meal->slug=str_slug($request->slug, ' ').$string;
         }
         
-            $meal->ingredients()->attach([
-                $request->ingredient_id
-            ]);
+        $meal->ingredients()->sync([
+             $request->ingredient_id
+        ]);
             
-            $meal->tags()->attach([
-                    $request->tag_id,
-                ]
-                );
+         $meal->tags()->sync([
+            $request->tag_id,
+        ]);
 
         $meal->save();
 
@@ -126,8 +108,8 @@ class MealController extends Controller
         'id'=>'required'
        ]);
 
-        $meal=Meal::find($request->id);
-        
+        $meal = Meal::find($request->id);
+        //dd($meal->ingredients()->get());
         $collect_ingid = $meal->ingredients()->pluck('ingredients.id');
         $collect_tagid = $meal->tags()->pluck('tags.id');
         

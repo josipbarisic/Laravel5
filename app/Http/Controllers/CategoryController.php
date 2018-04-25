@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Category;
+use App\models\CategoryTranslations;
 use DB;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,10 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        return Category::find($id); 
+        //return Category::where('id', 4)->with('category_translations')->first();
+        $var = Category::where('id', 4)->first();  
+        return $var->category_translations;
+
     }
     public function edit(Request $request)
     {

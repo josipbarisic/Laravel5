@@ -42,7 +42,7 @@ class IngredientController extends Controller
 
     public function show($id)
     {
-        
+        //Ingredient::withTrashed()->restore();
         return Ingredient::find($id);
     }
 

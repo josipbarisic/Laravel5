@@ -7,18 +7,20 @@
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "^3.1",
+        "doctrine/dbal": "^2.7",
         "fideloper/proxy": "~3.3",
         "fzaninotto/faker": "^1.7",
+        "igaster/laravel-translate-eloquent": "~1.0",
         "jzonta/faker-restaurant": "^1.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.4.0",
-        "igaster/laravel-translate-eloquent": "~1.0"
+        "laravelcollective/html": "^5.4.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0"
+        
     },
     "autoload": {
         "classmap": [

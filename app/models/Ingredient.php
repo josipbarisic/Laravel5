@@ -19,8 +19,8 @@ class Ingredient extends Model
 
     protected $dates = ['deleted_at'];
 
-    /*public function ingredients()
+    public function ingredients()
     {
         return $this->belongsTo('App\models\Ingredient');
-    }*/
+    }
 }
