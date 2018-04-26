@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\models\Category;
 use App\models\CategoryTranslations;
 use DB;
@@ -40,15 +41,14 @@ class CategoryController extends Controller
     
     public function index()
     {
-        return Category::all();
+        $translations = Category::with('category_translations')->get();
+        return $translations;
     }
 
     public function show($id)
     {
-        //return Category::where('id', 4)->with('category_translations')->first();
-        $var = Category::where('id', 4)->first();  
-        return $var->category_translations;
-
+        $catTranslate = Category::with('category_translations')->find($id);  
+        return $catTranslate; 
     }
     public function edit(Request $request)
     {
@@ -71,13 +71,14 @@ class CategoryController extends Controller
 
         return Category::find($request->id);
     }
+
     public function delete(Request $request)
     {
         $this->validate($request, 
        [
         'id'=>'required'
        ]);
-        $category=Category::find($request->id);
+        $category = Category::find($request->id);
         $category->delete();
 
         return 'Deleted'.$category;

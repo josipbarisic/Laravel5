@@ -33,12 +33,12 @@ class TagController extends Controller
     public function index()
     {
         
-        return Tag::all();
+        return Tag::with('tag_translations')->get();
     }
 
     public function show($id)
     {
-        return Tag::find($id);
+        return Tag::with('tag_translations')->find($id);
     }
 
     public function edit(Request $request)

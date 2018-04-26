@@ -1,15 +1,12 @@
 <?php
 
-namespace App;
+namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class CategoryTranslations extends Model
 {
-    protected $table='category_translations';
+    protected $table = 'category_translations';
 
-    public function category_translations()
-    {
-        return $this->belongsTo('');
-    }
+    public $timestamps = false;
 }

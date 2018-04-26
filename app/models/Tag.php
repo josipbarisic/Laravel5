@@ -23,4 +23,9 @@ class Tag extends Model
     {
         return $this->belongsTo('App\models\Tag');
     }
+
+    public function tag_translations()
+    {
+        return $this->hasMany('App\models\TagTranslations', 'tag_id', 'id' );
+    }
 }

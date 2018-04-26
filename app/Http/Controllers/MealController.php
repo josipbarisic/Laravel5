@@ -54,15 +54,13 @@ class MealController extends Controller
 
     public function index()
     {
-        return Meal::all();
+        return Meal::with('meal_translations')->paginate(1);
     }
 
     public function show($id)
     {
-        return Meal::find($id);
+        return Meal::with('meal_translations')->find($id);
     }
-
-
 
     public function edit(Request $request)
     {

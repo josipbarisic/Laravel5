@@ -42,6 +42,8 @@ Route::get('/category/{id}', 'CategoryController@show')->name('category');
 
 Route::post('/category/edit', 'CategoryController@edit')->name('category_edit');
 
+//Route::post('/category/trans', 'CategoryController@edittrans')->name('edit_trans');
+
 Route::post('/category/delete', 'CategoryController@delete')->name('delete_cat');
 
 //tag

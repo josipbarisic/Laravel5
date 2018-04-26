@@ -23,4 +23,9 @@ class Ingredient extends Model
     {
         return $this->belongsTo('App\models\Ingredient');
     }
+
+    public function ingredient_translations()
+    {
+        return $this->hasMany('App\models\IngredientTranslations', 'ingredient_id', 'id' );
+    }
 }

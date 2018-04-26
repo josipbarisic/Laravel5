@@ -31,4 +31,9 @@ class Meal extends Model
     {
         return $this->belongsToMany('App\models\Ingredient','jelo_ingredient','jelo_id','ingredient_id');
     }
+
+    public function meal_translations()
+    {
+        return $this->hasMany('App\models\MealTranslations', 'meal_id', 'id' );
+    }
 }

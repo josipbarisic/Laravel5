@@ -37,13 +37,13 @@ class IngredientController extends Controller
 
     public function index()
     {
-        return Ingredient::all();
+        return Ingredient::with('ingredient_translations')->get();
     }
 
     public function show($id)
     {
-        //Ingredient::withTrashed()->restore();
-        return Ingredient::find($id);
+        $ingTranslate = Ingredient::with('ingredient_translations')->find($id);  
+        return $ingTranslate;
     }
 
     public function edit(Request $request)
