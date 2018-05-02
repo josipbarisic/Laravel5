@@ -83,6 +83,10 @@
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                 </div>
+
+                <div class="links">
+                    <a href="http://laravel5.loc/api/meal/all"><h1>Prikaz jela</h1></a>
+                </div>
             </div>
         </div>
     </body>

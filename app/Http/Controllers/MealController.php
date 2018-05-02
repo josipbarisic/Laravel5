@@ -59,7 +59,24 @@ class MealController extends Controller
 
     public function show($id)
     {
-        return Meal::with('meal_translations')->find($id);
+        
+        $onemeal = Meal::with('meal_translations')->find($id);
+       /*  $eng='';
+        $esp='';
+        $frn='';
+        dd($onemeal->meal_translations);
+
+        foreach($onemeal->meal_translations as $one)
+            if ($one->where('language_id', 1))
+                $eng = 'English: '.$one->title;
+            elseif($one->where('language_id', 2))
+                $esp = 'Spanish: '.$one->title;
+            else
+                $frn = 'French: '.$one->title; */
+        return view ('pages.jela')->with('onemeal', $onemeal)->with('eng', $eng)->with('esp', $esp)->with('frn', $frn);
+
+        
+
     }
 
     public function edit(Request $request)

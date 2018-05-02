@@ -1,59 +1,34 @@
+@extends('layouts.app')
 
- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
- <link rel="stylesheet" id="bootstrap-css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" media="all" />
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #256;
-                color:black;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+@section('content')
+    <br>
+    <br>
+    <h1><strong>{{$onemeal->title}}</strong></h1>
+    
+        <div class="jumbotron">
+        {!!$onemeal->slug!!}
+        </div>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+        <div class="jumbotron">
+        <p><h3>Translations: </h3></p>
+        <!-- @foreach ($onemeal->meal_translations as $one)
             
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+
+            @if ($one->where('language_id', 1))
+                <p>English: </p>{{$one->title}}
+                
+            @elseif ($one->where('language_id', 2))
+                <p>Spanish: </p>{{$one->title}}
+
+            @else
+                <p>French: </p>{{$one->title}}
+            @endif 
+
+        @endforeach -->
+        </div>
+       
+        <hr>
+@endsection
 
 
 

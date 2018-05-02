@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-@if(session()->has('message'))
+<!-- @if(session()->has('message'))
     <div class="alert alert-success">
         {{ session()->get('message') }}
     </div>
-@endif
+@endif -->
     <br>
     <br>
     <h1><strong>{{$post->title}}</strong></h1>

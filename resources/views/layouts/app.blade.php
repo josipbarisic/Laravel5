@@ -70,7 +70,7 @@
         </style>
 
     <div class="container">
-        @include ('pages.messages')
+    
         @yield('content')
      
     </div>
