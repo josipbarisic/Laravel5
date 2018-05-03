@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngredientTranslations extends Model
 {
-    protected $table='ingredient_translations';
+    protected $table = 'ingredient_translations';
 
     
 }

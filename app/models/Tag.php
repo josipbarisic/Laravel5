@@ -15,9 +15,13 @@ class Tag extends Model
         'title',
         'slug',
     ];
-    protected $table='tags';
+    protected $table = 'tags';
 
-    protected $dates=['deleted_at'];
+    protected $dates = ['deleted_at'];
+
+    public $hidden = ['created_at', 'updated_at', 'deleted_at', 'pivot']; 
+
+    #relationships
 
     public function tags()
     {

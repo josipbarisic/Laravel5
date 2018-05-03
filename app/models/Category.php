@@ -15,9 +15,12 @@ class Category extends Model
         'title',
         'slug',
     ];
-    protected $table='category';
+    protected $table = 'category';
 
     protected $dates = ['deleted_at'];
+    
+    public $hidden = ['created_at', 'updated_at', 'deleted_at']; 
+
     
     public function category()
     {

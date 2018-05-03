@@ -10,7 +10,11 @@
         </div>
 
         <div class="jumbotron">
-        <p><h3>Translations: </h3></p>
+        <p><h2>Translations: </h2></p>
+        
+        <p><b>English:</b> {{$eng}}</p>
+        <p><b>Spanish:</b> {{$esp}}</p>
+        <p><b>French:</b> {{$frn}}</p>
         <!-- @foreach ($onemeal->meal_translations as $one)
             
 

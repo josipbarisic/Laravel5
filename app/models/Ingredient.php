@@ -15,9 +15,11 @@ class Ingredient extends Model
         'title',
         'slug',
     ];
-    protected $table='ingredients';
+    protected $table = 'ingredients';
 
     protected $dates = ['deleted_at'];
+
+    public $hidden = ['created_at', 'updated_at', 'deleted_at', 'pivot']; 
 
     public function ingredients()
     {

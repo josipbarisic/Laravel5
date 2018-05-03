@@ -9,27 +9,36 @@ class Meal extends Model
 {
     use softDeletes;
 
-    protected $table='jela';
+    protected $table = 'jela';
+    protected $dates = ['deleted_at'];
+    
+    public $timestamps = false;
+
+    public $hidden = ['category_id', 'deleted_at']; 
 
     #relationships 
     
-    protected $dates = ['deleted_at'];
-    
-    public $timestamps=false;
-    
     public function category()
     {
-        return $this->hasOne('App\models\Category','meal_id');
+        return $this->hasOne('App\models\Category', 'id', 'category_id');
     }
 
     public function tags()
     {
         return $this->belongsToMany('App\models\Tag','jelo_tag','jelo_id','tag_id');
     }
+    public function jelo_tag()
+    {
+        return $this->hasMany('App\models\JeloTag', 'jelo_id', 'id' );
+    }
 
     public function ingredients()
     {
         return $this->belongsToMany('App\models\Ingredient','jelo_ingredient','jelo_id','ingredient_id');
+    }
+    public function jelo_ingredient()
+    {
+        return $this->hasMany('App\models\JeloIngredient', 'jelo_id', 'id' );
     }
 
     public function meal_translations()

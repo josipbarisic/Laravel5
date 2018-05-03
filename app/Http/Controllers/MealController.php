@@ -52,31 +52,30 @@ class MealController extends Controller
         return $meal;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Meal::with('meal_translations')->paginate(1);
+        /* $this->validate($request, [
+            'lang' => 'required|exists:languages,language_id',
+        ]); */
+        
+        $join = DB::table('jela')->crossJoin('meal_translations')->get();
+
+        $all_meals = Meal::with('category','tags','ingredients','meal_translations');//->where('language_id', $request->language_id);//->paginate(1);
+        //return $all_meals->simplePaginate($request->input('per_page', 2)); 
+
+        dd($join);
     }
 
     public function show($id)
     {
         
         $onemeal = Meal::with('meal_translations')->find($id);
-       /*  $eng='';
-        $esp='';
-        $frn='';
-        dd($onemeal->meal_translations);
-
-        foreach($onemeal->meal_translations as $one)
-            if ($one->where('language_id', 1))
-                $eng = 'English: '.$one->title;
-            elseif($one->where('language_id', 2))
-                $esp = 'Spanish: '.$one->title;
-            else
-                $frn = 'French: '.$one->title; */
-        return view ('pages.jela')->with('onemeal', $onemeal)->with('eng', $eng)->with('esp', $esp)->with('frn', $frn);
-
         
-
+        $eng = $onemeal->meal_translations->where('language_id', 1)->pluck('title')->pull(0);
+        $esp = $onemeal->meal_translations->where('language_id', 2)->pluck('title')->pull(0);
+        $frn = $onemeal->meal_translations->where('language_id', 3)->pluck('title')->pull(0);
+        
+        return view ('pages.jela')->with('onemeal', $onemeal)->with('eng', $eng)->with('esp', $esp)->with('frn', $frn);
     }
 
     public function edit(Request $request)
@@ -88,7 +87,7 @@ class MealController extends Controller
 
        $meal=Meal::find($request->id);
        
-        if($meal==NULL)
+        if($meal == NULL)
         {
             return 'Ne postoji';
         }
