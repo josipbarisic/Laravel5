@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\models\Meal;
 use App\models\Category;
 use App\models\Ingredient;
+use App\models\Languages;
+use App\models\MealTranslations;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\models\Jelo_Ingredient;
+
 
 
 class MealController extends Controller
@@ -58,12 +61,34 @@ class MealController extends Controller
             'lang' => 'required|exists:languages,language_id',
         ]); */
         
-        $join = DB::table('jela')->crossJoin('meal_translations')->get();
+        //$join = DB::table('jela')->crossJoin('meal_translations')->get();
 
-        $all_meals = Meal::with('category','tags','ingredients','meal_translations');//->where('language_id', $request->language_id);//->paginate(1);
-        //return $all_meals->simplePaginate($request->input('per_page', 2)); 
+        $req = $request->input('lang');
+        $lang = Languages::where('langkey', $req)->pluck('id')->pull(0);
+        $meal = Meal::pluck('id');
+        $lang2 = MealTranslations::where('language_id', $lang)->pluck('title');
+        $langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang);
+        $cat = Category::pluck('id');
+        $cat_id = Meal::where('category_id', $cat);
+        if($req == 'hr')
+        {
+            $all_meals = Meal::with('category','tags','ingredients');//->where('language_id', $request->language_id);//->paginate(1);
+            return $all_meals->simplePaginate($request->input('per_page', 2)); 
+        }
+        else
+        {
+            $all_meals = Meal::first();
+            $translate = $all_meals->meal_translations->where('language_id', $lang);
+            $meal_category = $all_meals->category;
+            $meal_ingredients = $all_meals->ingredients;
+            $meal_tags = $all_meals->tags;
+            $collection = collect([$translate, $meal_category, $meal_ingredients, $meal_tags])->all();
+            
+            return $collection;
 
-        dd($join);
+        }
+        
+        
     }
 
     public function show($id)
