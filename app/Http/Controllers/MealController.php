@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\models\Meal;
 use App\models\Category;
+use App\models\Tag;
 use App\models\Ingredient;
 use App\models\Languages;
 use App\models\MealTranslations;
+use App\models\CategoryTranslations;
+use App\models\IngredientTranslations;
+use App\models\TagTranslations;
+use App\models\JeloIngredient;
+use App\models\JeloTag;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\models\Jelo_Ingredient;
+
 
 
 
@@ -63,6 +69,7 @@ class MealController extends Controller
         
         //$join = DB::table('jela')->crossJoin('meal_translations')->get();
 
+        
         $req = $request->input('lang');
         $lang = Languages::where('langkey', $req)->pluck('id')->pull(0);
         $meal = Meal::pluck('id');
@@ -73,11 +80,16 @@ class MealController extends Controller
         if($req == 'hr')
         {
             $all_meals = Meal::with('category','tags','ingredients');//->where('language_id', $request->language_id);//->paginate(1);
-            return $all_meals->simplePaginate($request->input('per_page', 2)); 
+            $this->filter($request, $all_meals);
+            return count($all_meals->get()); 
         }
         else
         {
-            $all_meals = Meal::first();
+
+            
+            $all_meals = Meal::all();
+            //foreach($all_meals as $one_meal)
+            
             $translate = $all_meals->meal_translations->where('language_id', $lang);
             $meal_category = $all_meals->category;
             $meal_ingredients = $all_meals->ingredients;
@@ -86,9 +98,28 @@ class MealController extends Controller
             
             return $collection;
 
+        } 
+           
+    }
+
+    public function filter(Request $request, $all_meals)
+    {
+        /* $req = $request->input('tag');
+        $tag = Tag::where('id', $req)->pluck('id')->pull(0);
+        $jelo_id = JeloTag::where('tag_id', $tag)->pluck('jelo_id');
+        $jelo = Meal::where('id', $jelo_id);
+        dd($jelo->get()); */
+
+        if($request->has('category_id'))
+        {
+            $all_meals->where('category_id', '=', $request->category_id);
+        }
+        if($request->has('tag'))
+        {
+            dd($all_meals->with('tags')->get());//->where('tag_id','=', $request->tag_id);
         }
         
-        
+        return $all_meals;
     }
 
     public function show($id)
