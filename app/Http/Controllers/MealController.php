@@ -71,52 +71,75 @@ class MealController extends Controller
 
         
         $req = $request->input('lang');
+        $req2 = $request -> input('per_page');
+        //$req3 = $request -> input('tags');
+        
+        //RELACIJE
+
         $lang = Languages::where('langkey', $req)->pluck('id')->pull(0);
         $meal = Meal::pluck('id');
+
         $lang2 = MealTranslations::where('language_id', $lang)->pluck('title');
         $langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang);
         $cat = Category::pluck('id');
         $cat_id = Meal::where('category_id', $cat);
+
+        //LANG = HR
+
         if($req == 'hr')
         {
-            $all_meals = Meal::with('category','tags','ingredients');//->where('language_id', $request->language_id);//->paginate(1);
-            $this->filter($request, $all_meals);
-            return count($all_meals->get()); 
+            //  JOIN TABLICE TAGS S TABLICOM JELA
+            $all_meals = Meal::select('jela.*')
+            ->leftJoin('jelo_tag', 'jela.id', '=', 'jelo_tag.jelo_id')
+            ->leftJoin('tags', 'tags.id', '=', 'jelo_tag.tag_id')
+            ->orderBy('id');
+
+            $all_meals = $this->filter($request, $all_meals);
+            return $all_meals->paginate($req2); 
         }
         else
         {
 
             
             $all_meals = Meal::all();
-            //foreach($all_meals as $one_meal)
+            foreach($all_meals as $onemeal)
+            {
+                $translate = $onemeal->meal_translations->where('language_id', $lang);
+                $meal_category = $onemeal->category;
+                $meal_ingredients = $onemeal->ingredients;
+                $meal_tags = $onemeal->tags;
+                $collection = collect([$translate, $meal_category, $meal_ingredients, $meal_tags])->all();
+
+                return $collection;
+            }
+
             
-            $translate = $all_meals->meal_translations->where('language_id', $lang);
-            $meal_category = $all_meals->category;
-            $meal_ingredients = $all_meals->ingredients;
-            $meal_tags = $all_meals->tags;
-            $collection = collect([$translate, $meal_category, $meal_ingredients, $meal_tags])->all();
-            
-            return $collection;
 
         } 
            
     }
 
+    //          FUNKCIJA ZA FILTRIRANJE PODATAKA IZ BAZE PO PARAMETRIMA
     public function filter(Request $request, $all_meals)
-    {
-        /* $req = $request->input('tag');
-        $tag = Tag::where('id', $req)->pluck('id')->pull(0);
-        $jelo_id = JeloTag::where('tag_id', $tag)->pluck('jelo_id');
-        $jelo = Meal::where('id', $jelo_id);
-        dd($jelo->get()); */
-
+    {   
         if($request->has('category_id'))
         {
             $all_meals->where('category_id', '=', $request->category_id);
         }
-        if($request->has('tag'))
+
+        if($request->has('tags'))
         {
-            dd($all_meals->with('tags')->get());//->where('tag_id','=', $request->tag_id);
+           $all_meals = $all_meals->where('tag_id', '=', $request->input('tags'))->with('tags');
+
+            /*      DOHVACANJE JELA PREKO TAG_ID PARAMETRA
+
+            $tag = Tag::where('id', $request->input('tags'))->pluck('id')->pull(0);
+            $jelo_id = JeloTag::where('tag_id', $tag)->pluck('jelo_id')->pull(0);
+            $all_meals = Meal::where('id', $jelo_id); */
+        }
+        if($request->has('with'))
+        {
+            $all_meals = $all_meals->with(explode(',',$request->input('with')));
         }
         
         return $all_meals;

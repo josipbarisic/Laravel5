@@ -29,7 +29,7 @@ class Meal extends Model
     }
     public function jelo_tag()
     {
-        return $this->hasMany('App\models\JeloTag', 'jelo_id', 'id' );
+        return $this->hasMany('App\models\JeloTag', 'jelo_id', 'id');
     }
 
     public function ingredients()
