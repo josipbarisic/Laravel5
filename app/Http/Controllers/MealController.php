@@ -63,65 +63,65 @@ class MealController extends Controller
 
     public function index(Request $request)
     {
-        /* $this->validate($request, [
-            'lang' => 'required|exists:languages,language_id',
-        ]); */
+        $this->validate($request, [
+            'lang' => 'required',
+        ]); 
         
-        //$join = DB::table('jela')->crossJoin('meal_translations')->get();
 
         
-        $req = $request->input('lang');
-        $req2 = $request -> input('per_page');
-        //$req3 = $request -> input('tags');
+        $req = $request -> input('per_page');
         
         //RELACIJE
 
-        $lang = Languages::where('langkey', $req)->pluck('id')->pull(0);
+        /* $lang = Languages::where('langkey', $req)->first();
         $meal = Meal::pluck('id');
 
-        $lang2 = MealTranslations::where('language_id', $lang)->pluck('title');
-        $langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang);
+        $lang2 = MealTranslations::where('language_id', $lang->id);
+        $langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang); */
         $cat = Category::pluck('id');
         $cat_id = Meal::where('category_id', $cat);
-
-        //LANG = HR
-
-        if($req == 'hr')
-        {
-            //  JOIN TABLICE TAGS S TABLICOM JELA
-            $all_meals = Meal::select('jela.*')
-            ->leftJoin('jelo_tag', 'jela.id', '=', 'jelo_tag.jelo_id')
-            ->leftJoin('tags', 'tags.id', '=', 'jelo_tag.tag_id')
-            ->orderBy('id');
-
-            $all_meals = $this->filter($request, $all_meals);
-            return $all_meals->paginate($req2); 
-        }
-        else
-        {
-
-            
-            $all_meals = Meal::all();
-            foreach($all_meals as $onemeal)
-            {
-                $translate = $onemeal->meal_translations->where('language_id', $lang);
-                $meal_category = $onemeal->category;
-                $meal_ingredients = $onemeal->ingredients;
-                $meal_tags = $onemeal->tags;
-                $collection = collect([$translate, $meal_category, $meal_ingredients, $meal_tags])->all();
-
-                return $collection;
-            }
-
-            
-
-        } 
-           
+    
+         //  JOIN TABLICE TAGS S TABLICOM JELA
+         $all_meals = Meal::select('jela.*')
+         ->leftJoin('jelo_tag', 'jela.id', '=', 'jelo_tag.jelo_id')
+         ->leftJoin('tags', 'tags.id', '=', 'jelo_tag.tag_id')
+         ->leftJoin('meal_translations', 'jela.id', '=', 'meal_translations.meal_id')
+         ->leftJoin('languages', 'meal_translations.language_id', '=', 'languages.id')
+         ->orderBy('id');
+        $all_meals = $this->filter($request, $all_meals);
+        return $all_meals->paginate($req); 
+      
     }
 
     //          FUNKCIJA ZA FILTRIRANJE PODATAKA IZ BAZE PO PARAMETRIMA
     public function filter(Request $request, $all_meals)
     {   
+        /* $langRequest = $request->validate([
+            'lang'=>'required'
+        ]); */
+
+        $reqL = $request->input('lang');
+        /* $lang = Languages::where('langkey', $reqL)->first();
+
+        //$meal = Meal::pluck('id');
+        $lang = MealTranslations::where('language_id', $lang->id); */
+     
+        //$langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang);
+        
+        
+        if($reqL == 'hr')
+        {
+            $all_meals->get();
+        }
+
+        if($reqL == 'en'||$reqL == 'es'||$reqL == 'fr')
+        {
+            $lang = Languages::where('langkey', $reqL)->first();
+            $all_meals = MealTranslations::where('language_id','=', $lang->id);
+        }
+            
+        
+
         if($request->has('category_id'))
         {
             $all_meals->where('category_id', '=', $request->category_id);
@@ -137,9 +137,16 @@ class MealController extends Controller
             $jelo_id = JeloTag::where('tag_id', $tag)->pluck('jelo_id')->pull(0);
             $all_meals = Meal::where('id', $jelo_id); */
         }
+
         if($request->has('with'))
         {
             $all_meals = $all_meals->with(explode(',',$request->input('with')));
+        }
+        
+        if ($request->has('diff_time'))
+        {
+            /* $time = (int)$request->input('diff_time');
+            $all_meals = $all_meals->where('created_at', '>', $time->time()); */
         }
         
         return $all_meals;
