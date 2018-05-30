@@ -12,7 +12,7 @@ class Meal extends Model
     protected $table = 'jela';
     protected $dates = ['deleted_at'];
     
-    public $timestamps = true;
+    public $timestamps = false;
 
     public $hidden = ['category_id', 'deleted_at']; 
 

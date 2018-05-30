@@ -80,14 +80,16 @@ class MealController extends Controller
         $langmeal = MealTranslations::where('meal_id', $meal)->where('language_id', $lang); */
         $cat = Category::pluck('id');
         $cat_id = Meal::where('category_id', $cat);
-    
-         //  JOIN TABLICE TAGS S TABLICOM JELA
-         $all_meals = Meal::select('jela.*')
+        $pm = Meal::where('id', '>', 7);
+        $pm->delete();
+
+        $all_meals = Meal::select('jela.*')
          ->leftJoin('jelo_tag', 'jela.id', '=', 'jelo_tag.jelo_id')
          ->leftJoin('tags', 'tags.id', '=', 'jelo_tag.tag_id')
          ->leftJoin('meal_translations', 'jela.id', '=', 'meal_translations.meal_id')
          ->leftJoin('languages', 'meal_translations.language_id', '=', 'languages.id')
-         ->orderBy('id');
+         ->orderBy('id')
+         ->distinct(); 
         $all_meals = $this->filter($request, $all_meals);
         return $all_meals->paginate($req); 
       
@@ -111,13 +113,17 @@ class MealController extends Controller
         
         if($reqL == 'hr')
         {
-            $all_meals->get();
+            $all_meals;
         }
 
         if($reqL == 'en'||$reqL == 'es'||$reqL == 'fr')
         {
             $lang = Languages::where('langkey', $reqL)->first();
+
             $all_meals = MealTranslations::where('language_id','=', $lang->id);
+
+            /* $all_meals = MealTranslations::select('meal_translations.*')
+            ->leftJoin('category_translations','meal_translations.'); */
         }
             
         
