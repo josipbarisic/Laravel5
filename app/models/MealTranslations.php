@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MealTranslations extends Model
 {
     protected $table = 'meal_translations';
+    protected $timestamps = true;
 
     protected $hidden = ['language_id', 'meal_id', 'category_id'];
   

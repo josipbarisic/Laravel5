@@ -12,7 +12,7 @@ class Meal extends Model
     protected $table = 'jela';
     protected $dates = ['deleted_at'];
     
-    public $timestamps = false;
+    public $timestamps = true;
 
     public $hidden = ['category_id', 'deleted_at']; 
 
@@ -45,4 +45,7 @@ class Meal extends Model
     {
         return $this->hasMany('App\models\MealTranslations', 'meal_id', 'id' );
     }
+
+    
+     
 }

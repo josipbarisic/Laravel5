@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MealTransCategoryId extends Migration
+class MealTranTimestamps extends Migration
 {
-    /*
+    /**
      * Run the migrations.
      *
      * @return void
@@ -14,7 +14,7 @@ class MealTransCategoryId extends Migration
     public function up()
     {
         Schema::table('meal_translations', function (Blueprint $table) {
-            $table->integer('category_id');
+            $table->timestamps();
         });
     }
 
@@ -26,7 +26,7 @@ class MealTransCategoryId extends Migration
     public function down()
     {
         Schema::dropIfExists('meal_translations', function (Blueprint $table) {
-            $table->integer('category_id');
+            $table->timestamps();
         });
     }
 }

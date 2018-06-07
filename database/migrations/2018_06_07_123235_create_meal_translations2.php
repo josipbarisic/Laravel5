@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMealTranslation extends Migration
+class CreateMealTranslations2 extends Migration
 {
-    /**
+   /**
      * Run the migrations.
      *
      * @return void

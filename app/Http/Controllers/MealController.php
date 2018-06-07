@@ -16,6 +16,7 @@ use App\models\JeloTag;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 
 
@@ -118,9 +119,9 @@ class MealController extends Controller
 
         if($reqL == 'en'||$reqL == 'es'||$reqL == 'fr')
         {
-            $lang = Languages::where('langkey', $reqL)->first();
+            $lang = Languages::where('langkey', $reqL)->pluck('id');
 
-            $all_meals = MealTranslations::where('language_id','=', $lang->id);
+            $all_meals = MealTranslations::where('language_id','=', $lang);
 
             /* $all_meals = MealTranslations::select('meal_translations.*')
             ->leftJoin('category_translations','meal_translations.'); */
@@ -146,13 +147,15 @@ class MealController extends Controller
 
         if($request->has('with'))
         {
-            $all_meals = $all_meals->with(explode(',',$request->input('with')));
+            $all_meals = $all_meals->with(explode(',', $request->input('with')));
         }
         
         if ($request->has('diff_time'))
         {
-            /* $time = (int)$request->input('diff_time');
-            $all_meals = $all_meals->where('created_at', '>', $time->time()); */
+            $timestamp = $request->input('diff_time');
+            $time = Carbon::createFromTimestamp($timestamp)->format('Y-m-d');
+            $all_meals = $all_meals->whereDate('updated_at', '<', $time); 
+
         }
         
         return $all_meals;

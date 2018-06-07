@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MealTransCategoryId extends Migration
+class MealTimestamps extends Migration
 {
-    /*
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::table('meal_translations', function (Blueprint $table) {
-            $table->integer('category_id');
+        Schema::table('jela', function (Blueprint $table) {
+            $table->timestamps();
         });
     }
 
@@ -25,8 +25,8 @@ class MealTransCategoryId extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meal_translations', function (Blueprint $table) {
-            $table->integer('category_id');
+        Schema::dropIfExists('jela', function (Blueprint $table) {
+            $table->timestamps();
         });
     }
 }

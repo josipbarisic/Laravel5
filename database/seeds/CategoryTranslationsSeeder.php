@@ -11,16 +11,15 @@ class CategoryTranslationsSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $string='-IngTran'; 
-        for ($i=11; $i<=15; $i++)
+    { 
+        for ($i=1; $i<=15; $i++)
         {
-            DB::table('ingredient_translations')->insert([
-                'id' => $i,
-                'title' => 'IngTranFra'.($i-10),
-                'slug' => str_slug(str_random(5), '').$string,
-                'language_id' => 2,
-                'ingredient_id' => rand(1, 5),
+            $randtime[$i] = rand(1525962167, 1526962167);
+            $time = Carbon::createFromTimestamp($randtime[i])->format('Y-m-d');
+            
+            DB::table('meal_translations')->where('id', $i)->insert([
+                'created_at' => $time,
+
             ]);
         }
     }
